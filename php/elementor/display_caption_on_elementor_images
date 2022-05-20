@@ -1,0 +1,16 @@
+//Display Captions on Elementor Images
+add_filter( 'elementor/widget/render_content', 'custom_add_image_caption', 10, 2 );
+function custom_add_image_caption( $widget_content, $widget ) {
+
+	if ( 'image' === $widget->get_name() ) {
+		$settings = $widget->get_settings();
+		$caption = wp_get_attachment_caption($settings['image']['id']);
+		
+		if ( ! empty($caption) ) {
+			$widget_content .= '<figcaption class="wp-caption custom-caption el-caption">'.$caption.'</figcaption>';
+		}
+	}
+
+	return $widget_content;
+
+}
