@@ -1,0 +1,9 @@
+
+add_action('elementor/page_templates/header-footer/before_content', 'custom_page_wrapper__open');
+function custom_page_wrapper__open(){
+	echo '<div id="page" class="page-wrap">';
+}
+add_action('elementor/page_templates/header-footer/after_content', 'custom_page_wrapper__close');
+function custom_page_wrapper__close(){
+	echo '</div>';
+}
