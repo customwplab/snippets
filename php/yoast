@@ -1,0 +1,23 @@
+<?php 
+//Breadcrumbs
+add_filter('wpseo_breadcrumb_links', 'custom_yoast_breadcrumb_links');
+function custom_yoast_breadcrumb_links( $links ) {
+    global $post;
+    
+	if ( is_singular( 'service_page' ) ) {
+        $breadcrumb[] = array(
+            'url' => get_post_type_archive_link('service_page'),
+            'text' => 'Services',
+        );
+        array_splice( $links, 1, -2, $breadcrumb );
+    }
+	
+	if ( is_singular( 'industry_page' ) ) {
+        $breadcrumb[] = array(
+            'url' => get_post_type_archive_link('industry_page'),
+            'text' => 'Industries',
+        );
+        array_splice( $links, 1, -2, $breadcrumb );
+    }
+    return $links;
+}
