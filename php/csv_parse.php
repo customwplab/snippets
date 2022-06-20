@@ -3,7 +3,7 @@ add_shortcode('wish_stars', 'kw_stars_shortcode');
 function kw_stars_shortcode(){
 	
 	ob_start();
-		//Get stars csv file
+		//Get  csv file
 	$csv_file = get_field('wish_stars_file', 'option');
 	
 	if($csv_file){		
@@ -26,7 +26,7 @@ function kw_stars_shortcode(){
 		$row_offset = (isset($_GET['row_offset'])) ? $all_pages[$_GET['row_offset']] : $all_pages[0];
 		$i = $row_offset;
 		
-		echo '<div id=wish-stars-container" class="wish-stars-container" data-action="'.get_the_permalink().'" data-page="1">';
+		echo '<div id="wish-stars-container" class="wish-stars-container" data-action="'.get_the_permalink().'" data-page="1">';
 
 		//Loop through rows
 		if ($rows_count > 0) {
