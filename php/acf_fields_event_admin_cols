@@ -14,7 +14,7 @@
  add_filter ( 'manage_event_posts_columns', 'cpt_event_admin_columns' );
 
  /*
- * Add columns to Hosting CPT
+ * Add columns to CPT
  */
  function cpt_event_custom_column ( $column, $post_id ) {
    switch ( $column ) {
