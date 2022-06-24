@@ -1,0 +1,42 @@
+
+<?php 
+/**
+ *	ACF Admin Columns
+ *
+ */
+
+ function cpt_event_admin_columns ( $columns ) {
+   return array_merge ( $columns, array ( 
+     'start_date' => __ ( 'Starts' ),
+     'end_date'   => __ ( 'Ends' ) 
+   ) );
+ }
+ add_filter ( 'manage_event_posts_columns', 'cpt_event_admin_columns' );
+
+ /*
+ * Add columns to Hosting CPT
+ */
+ function cpt_event_custom_column ( $column, $post_id ) {
+   switch ( $column ) {
+     case 'start_date':
+		$start = get_post_meta ( $post_id, 'start_date', true );
+       echo (!empty($start )) ? date('F j, Y',  strtotime($start)) : '';
+       break;
+     case 'end_date':
+      $end = get_post_meta ( $post_id, 'end_date', true );
+       echo (!empty($end )) ? date('F j, Y',  strtotime($end)) : '';
+       break;
+   }
+}
+add_action ( 'manage_event_posts_custom_column', 'cpt_event_custom_column', 10, 2 );
+
+ /*
+ * Add Sortable columns
+ */
+
+function cpt_event_column_register_sortable( $columns ) {
+	$columns['start_date'] = 'start_date';
+	$columns['end_date'] = 'start_date';
+	return $columns;
+}
+add_filter('manage_edit-event_sortable_columns', 'cpt_event_column_register_sortable' );
