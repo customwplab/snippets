@@ -1,0 +1,53 @@
+//Sticky Calendar Table Heading 
+	if($('.event-calendar-container').length){
+		
+		$('.event-calendar-container').each(function(){
+				
+			$window = $(window);
+			
+			var thisCalendar = $(this);
+			var calOffset = $(this).offset().top;
+
+			$window.scroll(function() {
+				
+				if (tableW !== 'undefined'){
+					var tableW = thisCalendar.find('table').outerWidth();
+				}
+				
+				var calEndOffset = thisCalendar.find('.sticky-stopper').offset().top;
+				var calHeading = 	thisCalendar.find('.calendar-heading'); 
+				
+				if ( $window.scrollTop() >= calOffset ) {
+					//set sticky header + width
+					if( !calHeading.hasClass('sticky')){
+						calHeading.addClass('sticky').css('width', (tableW + 1) +'px');
+						calHeading.closest('.event-calendar-container').addClass('header-is-sticky');
+						thisCalendar.css('margin-top', ($(calHeading).outerHeight() + 30));
+					}
+				} else {
+					//unset sticky header + width
+					if( calHeading.width() != tableW){
+						calHeading.removeClass('sticky').css('width', '');
+						calHeading.closest('.event-calendar-container').removeClass('header-is-sticky');
+						thisCalendar.css('margin-top', '');
+					}
+				}
+				if ($window.scrollTop() >= (calEndOffset - 250)){
+					console.log('end offset');
+				}
+				//bottom: unset sticky header + width
+				if ($window.scrollTop() >= (calEndOffset - 250) && calHeading.width() != (tableW + 1)) {
+					thisCalendar.removeClass('header-is-sticky').find('.calendar-heading').removeClass('sticky').css('width', '');
+					thisCalendar.css('margin-top', '');
+				} 
+			});
+			
+			//Mobile LR Scroll
+			var thisHeading = 	$(this).find('.calendar-heading'); 
+			 $(this).on('scroll', function() {
+				 console.log($(this).scrollLeft());
+				$(thisHeading).scrollLeft($(this).scrollLeft());
+			  });
+		});
+		
+	}
