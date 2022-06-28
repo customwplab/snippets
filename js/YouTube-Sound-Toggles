@@ -1,0 +1,51 @@
+//YT Mute Toggle Button (Elementor Background video)
+	$(document).on('click','#mute-toggle' ,function(e){
+		e.preventDefault();
+		var icon = $(this).find('i');
+		var playerID = $('.elementor-background-video-container iframe').attr('id');
+		
+		var title = $(this).attr('title');
+		var toggleTitle = $(this).data('toggle-title');
+		
+		if(icon.hasClass('fa-volume-up')){
+			$('#'+playerID)[0].contentWindow.postMessage('{"event":"command","func":"' + 'unMute' + '","args":""}', '*');
+			icon.removeClass('fa-volume-up').addClass('fa-volume-mute');
+		} else {
+			$('#'+playerID)[0].contentWindow.postMessage('{"event":"command","func":"' + 'mute' + '","args":""}', '*');
+			icon.removeClass('fa-volume-mute').addClass('fa-volume-up');
+		}
+		$(this).attr('title', toggleTitle);
+		$(this).data('toggle-title', title);
+
+	});
+	//YT Play Toffle Button (Elementor Background video)
+	$(document).on('click','#pause-toggle' ,function(e){
+		e.preventDefault();
+		var icon = $(this).find('i');
+		var playerID = $('.elementor-background-video-container iframe').attr('id');
+		
+		if(icon.hasClass('fa-pause-circle')){
+			$('#'+playerID)[0].contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
+			icon.removeClass('fa-pause-circle').addClass('fa-play-circle');
+			$(this).attr('title', 'Play Video');
+		} else {
+			$('#'+playerID)[0].contentWindow.postMessage('{"event":"command","func":"' + 'playVideo' + '","args":""}', '*');
+			icon.removeClass('fa-play-circle').addClass('fa-pause-circle');
+			$(this).attr('title', 'Pause Video');
+		}
+
+	});
+
+	//YouTube Video
+	setTimeout(function(){ // Need a delay timer cause sometimes video has not loaded yet
+		// Dont play video if prefers-reduced-motion media is set to reduce
+		var motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+		// Set to autoplay only if user has no motion preference
+		if (motionPreference.matches) {
+			var playerID = $('.elementor-background-video-container iframe').attr('id');
+			$('#'+playerID)[0].contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
+		}
+		//WCAG Describedby Attr
+		$('.elementor-background-video-container iframe').attr('aria-describedby', 'hero-video-desc');
+		$('.elementor-background-video-container iframe').attr('tabindex', '-1');
+	}, 1000);
