@@ -29,7 +29,7 @@ function register_cpt_integration() {
 		'show_in_nav_menus' => true,
 		 'menu_icon'   => 'dashicons-admin-post',
 		'query_var'          => true,		
-		'rewrite'            => array( 'slug' => 'integrations/%cat%' ),		
+		'rewrite'            => array( 'slug' => 'integrations' ),		
 		'capability_type'    => 'post',		
 		'has_archive'        => true,		
 		'hierarchical'       => true,		
@@ -95,18 +95,25 @@ function cpt_integration_post_link( $post_link, $id = 0 ) {
           # assume that 'available-for' is slug of your taxonomy 
           $terms = wp_get_object_terms( $post->ID, array('integration_category') );
           if ( $terms ) {
-             return str_replace( '%cat%', $terms[0]->slug, $post_link );
+             return str_replace( 'integrations', 'integrations/'.$terms[0]->slug, $post_link );
          }
       }
     }
     return   $post_link ;
 }
 
+
+
 add_action( 'init', 'cpt_integration_rewrite_rules' );
 function cpt_integration_rewrite_rules() {
    add_rewrite_rule(
 	   '^integrations/(.*)/(.*)/?$',
 	   'index.php?post_type=integration&name=$matches[2]',
+	   'top'
+   );
+	add_rewrite_rule(
+	   '^integrations/(.*)/?$',
+	   'index.php?taxonomy=integration_category&term=$matches[1]',
 	   'top'
    );
 }
