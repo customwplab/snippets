@@ -1,0 +1,20 @@
+function inViewport(){
+		 $('.animated-svg').each(function(){
+			 var divPos = $(this).offset().top,
+				 topOfWindow = $(window).scrollTop();
+			 
+			 if( divPos < topOfWindow+400 ){
+				 $(this).addClass('active');
+			 }
+		 });
+	 }
+	 
+	function isScrolledIntoView(elem) {
+		var docViewTop = $(window).scrollTop();
+		var docViewBottom = docViewTop + $(window).height();
+
+		var elemTop = $(elem).offset().top;
+		var elemBottom = elemTop + $(elem).height();
+
+		return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+	}
