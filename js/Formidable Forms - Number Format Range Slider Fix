@@ -1,0 +1,31 @@
+//format currency fix (formidable)
+		$( document ).ajaxComplete(function() {
+			$('#project-form input[type="range"]').each(function(){
+				var id = $(this).attr('id');
+				rangeDisplay(id);
+			});
+		});
+		
+		
+		$(document).on('input', "#project-form input[type='range']",function(){
+			var id = $(this).attr('id');
+			rangeDisplay(id);
+		});
+		$(document).on('change', "#project-form input[type='range']",function(){
+			var id = $(this).attr('id');
+			rangeDisplay(id);
+		});
+		
+		function rangeDisplay(id){
+			console.log('change');
+			var amount = parseInt($('#'+id).next('.frm_range_value').text());
+			var formatted = formatToCurrency(amount);
+			var container = $('#'+id).closest('.frm_range_container');
+			console.log(formatted);
+			container.find('#budget-display').remove();
+			container.find('.frm_range_value').after('<h3 id="budget-display">$'+formatted+'<h3>');
+		}
+		
+		function formatToCurrency(amount){
+			return (amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'); 
+		}
