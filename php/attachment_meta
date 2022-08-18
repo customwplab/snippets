@@ -1,0 +1,70 @@
+<?php 
+
+//add_shortcode('temp_1', 'customAttachmentTitles');
+function customAttachmentTitles(){
+	
+	/*
+	Title: <Post Title> OR <Post custom field value>
+	Alt: <Post Title> OR <Post custom field value> + "designed by GOOD Company, Calgary, Canada"
+	Description: <Post Title> OR <Post custom field value>  + "designed by GOOD Company, Calgary, Canada"
+*/
+	ob_start();
+	$work_parent_pages = [234,238, 236, 1805];
+	$args = [
+		'post_type' => 'page', 
+		'post_parent__in' => $work_parent_pages, 
+		'numberposts' => -1, 
+		'posts_per_page' => -1, 
+		'order' => 'ASC',
+		'order_by' => 'title'
+	];
+	
+	$work_posts = get_posts($args);
+	
+	$i = 0;
+	foreach($work_posts  as $work_post){
+		echo '<br><h2>'.get_the_title($work_post->ID).'</h2><br><br>';
+		
+		$attachments = get_posts( array(
+            'post_type' => 'attachment',
+            'posts_per_page' => -1,
+            'post_parent' => $work_post->ID,
+			'numberposts' => -1,
+			'posts_per_page' => -1
+           // 'exclude'     => get_post_thumbnail_id()
+        ));
+		
+		$work_post_title = get_the_title($work_post->ID);
+		
+		foreach($attachments as $attachment){
+			$i++;
+			echo '<br><strong style="color: #1c9ded">'.get_the_title($attachment->ID).'</strong><br>';
+			
+			if($work_post_title !== get_the_title($attachment->ID)){
+				$alt_desc = $work_post_title . " designed by GOOD Company, Calgary, Canada";
+				$image_meta = array(
+					'ID'		=> $attachment->ID,			// Specify the image (ID) to be updated
+					'post_title'	=> $work_post_title,		// Set image Title to sanitized title
+					'post_content'	=> $alt_desc		// Set image Description (Content) to sanitized title
+					);
+				echo '<strong>updated to:</strong><br>';
+				echo $work_post_title.'<br>';
+				echo $alt_desc.'<br>';
+
+				// Set the image Alt-Text
+				
+				update_post_meta( $attachment->ID, '_wp_attachment_image_alt', $alt_desc );
+				wp_update_post( $image_meta );
+			} else {
+				echo '<br><strong style="color: #ff5c26">Already updated - Skipped: '.get_the_title($attachment->ID).'</strong><br>';
+			}
+		
+		}
+		
+		
+	}
+	 echo '<h4>processed '.$i.' images</h4>';
+		
+		return ob_get_clean();
+}
+?>
