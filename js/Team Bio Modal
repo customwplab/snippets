@@ -1,0 +1,54 @@
+
+//Add hidden section with bio contnet to loop with calss "bio-contnet"
+//trigger elements, add class "trigger-bio-popup"
+if($('.trigger-bio-popup').length){
+			
+			$('footer.elementor-location-footer').prepend('<div id="team-modal"><span class="close">x</span><div class="bio-content"></div></div>');
+			
+			$(document).on('click','.trigger-bio-popup', function(event){
+					event.preventDefault();
+				
+					var content = $(this).closest('article').find('section.bio-content').html();
+					console.log(content);
+					$('#team-modal').removeClass('slide-in');
+					$('#team-modal .bio-content').html(content);
+					$('#team-modal').addClass('slide-in');
+						
+			});
+		
+			$(document).on('click','#team-modal .close', function(event){
+				$('#team-modal').removeClass('slide-in');
+			});
+			
+		}
+    
+/* Starter CSS */
+/*     
+#team-modal {
+   position: fixed;
+	width: 75vw;
+    height: 100vh;
+	max-width: 600px;
+	z-index: 99999;
+	background-color: #fff;
+	padding: 50px;
+	top: 0;
+	box-shadow: 5px 0 15px -5px rgb(0 0 0 / 10%);
+	transform: translateX(-100%);
+	transition: all 0.7s;
+	opacity: 0;
+	overflow-y:scroll;
+}
+
+#team-modal.slide-in {
+   transform: translateX(0);
+   opacity: 1;
+}
+
+#team-modal .close {
+	position:absolute;
+	right:10px;
+	top:10px;
+	cursor:pointer;
+}
+*/
