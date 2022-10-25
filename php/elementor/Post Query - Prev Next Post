@@ -13,9 +13,9 @@ add_action( 'elementor/query/next_post', 'elq_next_post' );
 function elq_next_post( $query ) {
 	
 	global $post;
-	$prev = get_next_post();
+	$next = get_next_post();
 	
 	$query->set( 'post_type',   $post->post_type);
-	$query->set( 'post__in',   [$prev->ID]);
+	$query->set( 'post__in',   [$next->ID]);
 }
 
