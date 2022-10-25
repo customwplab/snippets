@@ -1,5 +1,10 @@
 
 //Add hidden section with bio contnet to loop with calss "bio-contnet"
+/* element css: 
+body:not(.elementor-editor-active) selector {
+    display:none;
+}
+*/
 //trigger elements, add class "trigger-bio-popup"
 if($('.trigger-bio-popup').length){
 			
