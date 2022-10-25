@@ -1,0 +1,21 @@
+<?php 
+add_action( 'elementor/query/prev_post', 'elq_prev_post' );
+function elq_prev_post( $query ) {
+	
+	global $post;
+	$prev = get_previous_post();
+	
+	$query->set( 'post_type',   $post->post_type);
+	$query->set( 'post__in',   [$prev->ID]);
+}
+
+add_action( 'elementor/query/next_post', 'elq_next_post' );
+function elq_next_post( $query ) {
+	
+	global $post;
+	$prev = get_next_post();
+	
+	$query->set( 'post_type',   $post->post_type);
+	$query->set( 'post__in',   [$prev->ID]);
+}
+
