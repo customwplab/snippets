@@ -1,0 +1,48 @@
+/** CSS **/
+.custom-select select {
+    display: none;
+}
+.convert-to-slide-down .select-slide-down {
+    padding-bottom: 0;
+}
+.select-slide-down .placeholder {
+    text-transform: uppercase;
+    width: 100%;
+    max-width: 100%;
+   background-color:  var(--dark);
+	font-size:1rem;
+	font-weight: 600;
+	color: var(--purple);
+    position: relative;
+    cursor: pointer;
+	z-index:10;
+}
+.select-slide-down .placeholder:after {
+    font-family: 'Font Awesome 5 Pro';
+    content: '\f078';
+    position: absolute;
+    font-size: 18px;
+    right: 10px;
+    top: 0;
+	color: var(--purple);
+}
+.select-slide-down .options {
+	list-style: none;
+	display: none;
+	padding: 30px 20px 20px 20px;
+	border-radius: 0 0 25px 25px;
+	margin: 0;
+	background-color: var(--purple);
+	color: #fff;
+	z-index:0;
+	transform:translateY(-20px);
+	font-weight: 600;
+}
+.select-slide-down .option {
+    padding: 7px 5px;
+    cursor: pointer;
+}
+.select-slide-down .option.active,
+.select-slide-down .option:hover {
+    color:  var(--dark);
+}
